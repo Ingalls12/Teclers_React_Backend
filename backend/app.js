@@ -1,5 +1,10 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 require("dotenv").config();
+const config = {
+	llave : process.env.SECRETO
+};
+
 
 function logger(req,res,next){
     console.log("Request received: ",req.protocol);
@@ -9,12 +14,16 @@ app = express();
 app.use(logger)
 app.use(express.json())
 const cors = require("cors");
+app.set("llave",config.llave)
 app.use(cors({"origin":"*","methods":"GET,POST"}));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
 app.listen(3000,()=>{
     console.log("Se inicio el servidor");
 })
+
 
 app.use("/",require("./rutas/rutas"));
 
