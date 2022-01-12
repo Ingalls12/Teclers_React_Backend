@@ -3,7 +3,25 @@ let router = express.Router();
 const sequel = require("./sequel");
 const jwt = require("jsonwebtoken")
 
-
+const Logged = express.Router()
+Logged.use((req, res, next) => {
+    const token = req.headers['access-token'];
+    console.log("el token es " + token);
+    if (token) {
+      jwt.verify(token, app.get('llave'), (err, decoded) => {      
+        if (err) {
+          return res.json({ mensaje: 'Token inválido' });    
+        } else {
+          req.decoded = decoded;    
+          next();
+        }
+      });
+    } else {
+      res.send({ 
+          mensaje: 'No se ha recibido un Token.' 
+      });
+    }
+ });
 
 router.post("/usuarios",(req,res)=>{
     let query = `SELECT * FROM users WHERE FirstName LIKE "${req.body.FirstName}";`;
@@ -26,21 +44,27 @@ router.post("/usuarios",(req,res)=>{
 })
 
 app.post('/autenticar', (req, res) => {
-    
     console.log("usuario: " + req.body.usuario + " contrasena: " + req.body.contrasena)
-
-    if(req.body.usuario === "tecler" && req.body.contrasena === "holatecler") {
-        const payload = {LogIn:  true, };
-		const token = jwt.sign(payload, app.get('llave'), {expiresIn: 1440});
-        
-		res.json({
-			mensaje: 'Autenticación correcta',
-			token: token
-		});
-    } else {
-        res.json({ mensaje: "Usuario o contraseña incorrectos"})
-    }
+    let query = `SELECT * FROM users WHERE Username = "${req.body.usuario}" AND Password = "${req.body.contrasena}" `;
+    sequel.query(query,{type:sequel.QueryTypes.SELECT})
+        .then(datos=>{
+            console.log(datos)
+            if(datos[0].UserID){
+                console.log("Si existe este usuario")
+                const payload = {LogIn:  true, };
+                const token = jwt.sign(payload, app.get('llave'), {expiresIn: 1440});
+                
+                res.json({
+                    mensaje: 'Autenticación correcta',
+                    token: token
+                });
+            }else {
+                res.json({ mensaje: "Usuario o contraseña incorrectos"})
+            }
+        })
 })
+
+
 
 router.post("/crear_usuarios",(req,res)=>{
 

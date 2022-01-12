@@ -30,3 +30,6 @@ SELECT * FROM users WHERE FirstName LIKE "Leonardo"
 
 Insert into Users
 INSERT INTO users(Username,LastName,FirstName,Password,Country,City)VALUES("Leo52","Ingalls","Leonardo","12345678","Mexico","ciudad de Mexico")  
+
+Comprobación de usuario
+SELECT * FROM `users` WHERE Username = <Username> AND Password =< Password> 
