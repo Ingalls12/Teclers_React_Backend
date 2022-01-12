@@ -1,0 +1,32 @@
+CREATE DATABASE Teclers
+
+CREATE TABLE Users (
+    UserID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    Username varchar(33),
+    Password varchar(50),
+    LastName varchar(255),
+    FirstName varchar(255),
+    Country varchar(255),
+    City varchar(255),
+    Age int(3),
+    Studies varchar(255),
+    Languages varchar(255),
+    Linkedin varchar(255),
+    Hobbies JSON,
+    Extra JSON 
+);
+
+CREATE TABLE Publications(
+    PublicationId int,
+    UserID int NOT NULL,
+    Content JSON NOT NULL,
+    PublicationDate datetime,
+    PRIMARY KEY (PublicationId), 
+    FOREIGN KEY(UserID) REFERENCES Users(UserID)
+);
+Pruebas
+Search for a UserID
+SELECT * FROM users WHERE FirstName LIKE "Leonardo"
+`SELECT * FROM users WHERE FirstName LIKE "${req.body.usuario}";`
+Insert into Users
+INSERT INTO users(Username,LastName,FirstName,Password,Country,City)VALUES("Leo52","Ingalls","Leonardo","12345678","Mexico","ciudad de Mexico")  
