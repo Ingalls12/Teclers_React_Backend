@@ -27,6 +27,6 @@ CREATE TABLE Publications(
 Pruebas
 Search for a UserID
 SELECT * FROM users WHERE FirstName LIKE "Leonardo"
-`SELECT * FROM users WHERE FirstName LIKE "${req.body.usuario}";`
+
 Insert into Users
 INSERT INTO users(Username,LastName,FirstName,Password,Country,City)VALUES("Leo52","Ingalls","Leonardo","12345678","Mexico","ciudad de Mexico")  
