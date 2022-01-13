@@ -19,7 +19,7 @@ CREATE TABLE Users (
 CREATE TABLE Publications(
     PublicationId int,
     UserID int NOT NULL,
-    Content JSON NOT NULL,
+    Content varchar(255) NOT NULL,
     PublicationDate datetime,
     PRIMARY KEY (PublicationId), 
     FOREIGN KEY(UserID) REFERENCES Users(UserID)

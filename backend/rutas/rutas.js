@@ -52,7 +52,7 @@ app.post('/autenticar', (req, res) => {
             try{
                 if(datos[0].UserID){
                     console.log("Si existe este usuario")
-                    const payload = {LogIn:  true, };
+                    const payload = {LogIn:  true, ID:datos[0].UserID,Name: datos[0].FirstName };
                     const token = jwt.sign(payload, app.get('llave'), {expiresIn: 1440});
                     
                     res.json({
@@ -77,9 +77,12 @@ router.post("/crear_usuarios",(req,res)=>{
     .then(datos=>{
         let usuario = datos;
         console.log(usuario);
+        const payload = {LogIn:  true, ID:datos[0].UserID,Name: datos[0].FirstName };
+        const token = jwt.sign(payload, app.get('llave'), {expiresIn: 1440});
         res.status(200).json({
-            msg:"Consulta ejecutada con exito",
-            data:"Se agrego el usuario"
+            mensaje: 'Autenticación correcta',
+            token: token
+        
         })
     })
     .catch((error)=>{
