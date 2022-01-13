@@ -13,7 +13,8 @@ CREATE TABLE Users (
     Languages varchar(255),
     Linkedin varchar(255),
     Hobbies varchar(255),
-    Extra varchar(255) 
+    Extra varchar(255) ,
+    ProfilePic Blob
 );
 
 CREATE TABLE Publications(

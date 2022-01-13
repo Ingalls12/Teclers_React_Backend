@@ -23,6 +23,7 @@ Logged.use((req, res, next) => {
     }
  });
 
+
 router.post("/usuarios",(req,res)=>{
     let query = `SELECT * FROM users WHERE FirstName LIKE "${req.body.FirstName}";`;
 
@@ -75,9 +76,10 @@ router.post("/crear_usuarios",(req,res)=>{
     console.log(query)
     sequel.query(query,{type:sequel.QueryTypes.INSERT})
     .then(datos=>{
+        console.log(datos)
         let usuario = datos;
         console.log(usuario);
-        const payload = {LogIn:  true, ID:datos[0].UserID,Name: datos[0].FirstName };
+        const payload = {LogIn:  true, ID:datos.UserID,Name: req.body.FirstName };
         const token = jwt.sign(payload, app.get('llave'), {expiresIn: 1440});
         res.status(200).json({
             mensaje: 'Autenticación correcta',
