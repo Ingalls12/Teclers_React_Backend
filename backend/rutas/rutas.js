@@ -49,16 +49,19 @@ app.post('/autenticar', (req, res) => {
     sequel.query(query,{type:sequel.QueryTypes.SELECT})
         .then(datos=>{
             console.log(datos)
-            if(datos[0].UserID){
-                console.log("Si existe este usuario")
-                const payload = {LogIn:  true, };
-                const token = jwt.sign(payload, app.get('llave'), {expiresIn: 1440});
-                
-                res.json({
-                    mensaje: 'Autenticación correcta',
-                    token: token
-                });
-            }else {
+            try{
+                if(datos[0].UserID){
+                    console.log("Si existe este usuario")
+                    const payload = {LogIn:  true, };
+                    const token = jwt.sign(payload, app.get('llave'), {expiresIn: 1440});
+                    
+                    res.json({
+                        mensaje: 'Autenticación correcta',
+                        token: token
+                    });
+                }
+            }catch(e){
+                console.log("Usuario no encontrado")
                 res.json({ mensaje: "Usuario o contraseña incorrectos"})
             }
         })
