@@ -12,8 +12,8 @@ CREATE TABLE Users (
     Studies varchar(255),
     Languages varchar(255),
     Linkedin varchar(255),
-    Hobbies JSON,
-    Extra JSON 
+    Hobbies varchar(255),
+    Extra varchar(255) 
 );
 
 CREATE TABLE Publications(
