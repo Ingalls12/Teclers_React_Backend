@@ -76,7 +76,10 @@ app.post('/autenticar', (req, res) => {
                     res.status(200).json({
                         mensaje: 'Autenticación correcta',
                         token: token,
-                        usuario: {ID:datos[0].UserID,Nombre:datos[0].FirstName}
+                        usuarioID: payload.ID,
+                        usuario: payload.Name,
+                        Logged: true
+
                     });
                 }
             }catch(e){

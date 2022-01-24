@@ -14,7 +14,8 @@ CREATE TABLE Users (
     Linkedin varchar(255),
     Hobbies varchar(255),
     Extra varchar(255) ,
-    ProfilePic Blob
+    ProfilePic Blob,
+    amigos JSON
 );
 
 CREATE TABLE Publications(
