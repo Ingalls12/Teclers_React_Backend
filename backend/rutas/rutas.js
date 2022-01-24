@@ -22,7 +22,24 @@ Logged.use((req, res, next) => {
       });
     }
  });
+ router.get("/usuarios",(req,res)=>{
+    let query = `SELECT UserID,Username,FirstName FROM users `;
 
+    sequel.query(query,{type:sequel.QueryTypes.SELECT})
+    .then(datos=>{
+        console.log(datos);
+        res.status(200).json({
+            msg:"Consulta ejecutada con exito",
+            data:datos
+        })
+    })
+    .catch((error)=>{
+        console.log(error)
+        res.status(500).json({
+            error:"Hubo un error"
+        })
+    })
+})
 
 router.post("/usuarios",(req,res)=>{
     let query = `SELECT * FROM users WHERE FirstName LIKE "${req.body.FirstName}";`;
@@ -56,14 +73,15 @@ app.post('/autenticar', (req, res) => {
                     const payload = {LogIn:  true, ID:datos[0].UserID,Name: datos[0].FirstName };
                     const token = jwt.sign(payload, app.get('llave'), {expiresIn: 1440});
                     
-                    res.json({
+                    res.status(200).json({
                         mensaje: 'Autenticación correcta',
-                        token: token
+                        token: token,
+                        usuario: {ID:datos[0].UserID,Nombre:datos[0].FirstName}
                     });
                 }
             }catch(e){
                 console.log("Usuario no encontrado")
-                res.json({ mensaje: "Usuario o contraseña incorrectos"})
+                res.status(401).json({ mensaje: "Usuario o contraseña incorrectos"})
             }
         })
 })
