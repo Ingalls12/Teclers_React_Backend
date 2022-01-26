@@ -11,7 +11,6 @@ describe('Getting a user: ',()=>{
     .post('/usuarios')
     .send({FirstName:"Leonardo"})
     .end( function(err,res){
-    console.log(res.body);
     expect(res).to.have.status(200);
     done();
     });

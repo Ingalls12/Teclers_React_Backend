@@ -42,14 +42,14 @@ Logged.use((req, res, next) => {
 })
 
 router.post("/usuarios",(req,res)=>{
-    let query = `SELECT * FROM users WHERE FirstName LIKE "${req.body.FirstName}";`;
+    let query = `SELECT UserID,Username,FirstName FROM users WHERE FirstName LIKE "${req.body.FirstName}";`;
 
     sequel.query(query,{type:sequel.QueryTypes.SELECT})
     .then(datos=>{
         let usuario = datos;
      
-        console.log(usuario,"prueba");
-        if(usuario===[]){
+        console.log(usuario,"prueba usuarios post");
+        if(usuario.length==0){
             res.status(500).json({
                 error:"No se encontro el usuario"
             })
