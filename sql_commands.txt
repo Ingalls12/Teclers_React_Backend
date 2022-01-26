@@ -19,7 +19,7 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Publications(
-    PublicationId int,
+    PublicationId int NOT NULL AUTO_INCREMENT,
     UserID int NOT NULL,
     Content varchar(255) NOT NULL,
     PublicationDate datetime,
@@ -35,3 +35,7 @@ INSERT INTO users(Username,LastName,FirstName,Password,Country,City)VALUES("Leo5
 
 Comprobación de usuario
 SELECT * FROM `users` WHERE Username = <Username> AND Password =< Password> 
+
+Insertar una publicación
+INSERT INTO publications (UserID, Content, PublicationDate)VALUES (1,"Mi primer post",'2012-01-01') 
+                                                                    

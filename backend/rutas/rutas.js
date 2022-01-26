@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken")
 const Logged = express.Router()
 Logged.use((req, res, next) => {
     const token = req.headers['access-token'];
+    console.log(req.headers)
     console.log("el token es " + token);
     if (token) {
       jwt.verify(token, app.get('llave'), (err, decoded) => {      
@@ -96,7 +97,17 @@ app.post('/autenticar', (req, res) => {
             }
         })
 })
-
+router.post("/publicaciones",Logged,(req, res)=>{
+    let query = `INSERT INTO publications (UserID, Content, PublicationDate)VALUES("${req.body.UserID}", "${req.body.Content}", "${req.body.PublicactionDate}")`;
+    sequel.query(query,{type:sequel.QueryTypes.INSERT})
+    .then(datos=>{
+        console.log(datos, "postman");
+        let publicacion = datos;
+        res.status(200).json({
+            mensaje:"Publicacion publicada",
+        })
+    })
+})
 
 
 router.post("/crear_usuarios",(req,res)=>{
