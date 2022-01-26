@@ -97,14 +97,35 @@ app.post('/autenticar', (req, res) => {
             }
         })
 })
+router.get("/publicaciones",Logged,(req,res)=>{
+    let query = `SELECT * publications`;
+    sequel.query(query,{type:sequel.QueryTypes.SELECT})
+    .then(datos=>{
+        res.status(200).json({
+            mensaje:"Peticion completada con exito",
+            datos:datos
+        })
+    })
+    .catch((error)=>{
+        console.log(error)
+        res.status(500).json({
+            error:"Error Consulta  no ejecutada"
+        })
+    })
+})
 router.post("/publicaciones",Logged,(req, res)=>{
     let query = `INSERT INTO publications (UserID, Content, PublicationDate)VALUES("${req.body.UserID}", "${req.body.Content}", "${req.body.PublicactionDate}")`;
     sequel.query(query,{type:sequel.QueryTypes.INSERT})
     .then(datos=>{
-        console.log(datos, "postman");
-        let publicacion = datos;
+
         res.status(200).json({
             mensaje:"Publicacion publicada",
+        })
+    })
+    .catch((error)=>{
+        console.log(error)
+        res.status(500).json({
+            error:"Publicacion no publicada"
         })
     })
 })
