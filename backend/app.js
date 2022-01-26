@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 require("dotenv").config();
+const PUERTO = process.env.PORT
 const config = {
 	llave : process.env.SECRETO
 };
@@ -20,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-app.listen(8080,()=>{
+app.listen(PUERTO,()=>{
     console.log("Se inicio el servidor");
 })
 

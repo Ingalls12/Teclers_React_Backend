@@ -47,11 +47,19 @@ router.post("/usuarios",(req,res)=>{
     sequel.query(query,{type:sequel.QueryTypes.SELECT})
     .then(datos=>{
         let usuario = datos;
-        console.log(usuario);
-        res.status(200).json({
-            msg:"Consulta ejecutada con exito",
-            data:usuario
-        })
+     
+        console.log(usuario,"prueba");
+        if(usuario===[]){
+            res.status(500).json({
+                error:"No se encontro el usuario"
+            })
+        }else{
+            res.status(200).json({
+                msg:"Consulta ejecutada con exito",
+                data:usuario
+            })
+        }
+       
     })
     .catch((error)=>{
         console.log(error)
