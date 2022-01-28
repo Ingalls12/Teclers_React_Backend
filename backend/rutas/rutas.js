@@ -6,8 +6,6 @@ const jwt = require("jsonwebtoken")
 const Logged = express.Router()
 Logged.use((req, res, next) => {
     const token = req.headers['access-token'];
-    console.log(req.headers)
-    console.log("el token es " + token);
     if (token) {
       jwt.verify(token, app.get('llave'), (err, decoded) => {      
         if (err) {
@@ -98,9 +96,10 @@ app.post('/autenticar', (req, res) => {
         })
 })
 router.get("/publicaciones",Logged,(req,res)=>{
-    let query = `SELECT * FROM publications`;
+    let query = "SELECT users.UserID, PublicationId, users.FirstName,users.Username, Content, PublicationDate FROM `publications` INNER JOIN `users`  WHERE users.UserID = publications.UserID";
     sequel.query(query,{type:sequel.QueryTypes.SELECT})
     .then(datos=>{
+        console.log(datos)
         res.status(200).json({
             mensaje:"Peticion completada con exito",
             datos:datos
