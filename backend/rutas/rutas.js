@@ -98,7 +98,7 @@ app.post('/autenticar', (req, res) => {
         })
 })
 router.get("/publicaciones",Logged,(req,res)=>{
-    let query = `SELECT * publications`;
+    let query = `SELECT * FROM publications`;
     sequel.query(query,{type:sequel.QueryTypes.SELECT})
     .then(datos=>{
         res.status(200).json({
